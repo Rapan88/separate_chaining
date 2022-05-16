@@ -105,9 +105,6 @@ public class SeparateChaining<K, V> {
             buckets = new ArrayList<>();
             capacity = 2 * capacity;
             countOfItems = 0;
-            for (int i = 0; i < capacity; i++) {
-                buckets.add(null);
-            }
             for (HashNode<K, V> headNode : temp) {
                 while (headNode != null) {
                     add(headNode.key, headNode.value);
