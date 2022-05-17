@@ -3,15 +3,15 @@ import java.util.List;
 import java.util.Objects;
 
 public class SeparateChaining<K, V> {
-    private List<HashNode<K, V>> buckets;
+     List<HashNode<K, V>> buckets;
     private int capacity;
     private int countOfItems;
 
     public SeparateChaining() {
-        buckets = new ArrayList<>();
+
         countOfItems = 0;
         capacity = 10;
-
+        buckets = new ArrayList<>(capacity);
         for (int i = 0; i < capacity; i++) {
             buckets.add(null);
         }
@@ -31,9 +31,7 @@ public class SeparateChaining<K, V> {
 
     private int getBucketIndex(K key) {
         int hashCode = hash(key);
-        int index = hashCode % capacity;
-        index = index < 0 ? index * -1 : index;
-        return index;
+        return hashCode & (capacity -1);
     }
 
     public V delete(K key) {
@@ -100,11 +98,14 @@ public class SeparateChaining<K, V> {
         buckets.set(bucketIndex, newNode);
 
 
-        if ((1.0 * countOfItems) / capacity >= 0.7) {
+        if ((1.0 * countOfItems) / capacity >= 0.5) {
             List<HashNode<K, V>> temp = buckets;
             buckets = new ArrayList<>();
             capacity = 2 * capacity;
             countOfItems = 0;
+            for (int i = 0; i < capacity; i++) {
+                buckets.add(null);
+            }
             for (HashNode<K, V> headNode : temp) {
                 while (headNode != null) {
                     add(headNode.key, headNode.value);

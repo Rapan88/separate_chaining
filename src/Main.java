@@ -13,14 +13,15 @@ public class Main {
 
         Random random = new Random();
 
-        for(int i = 0; i<30; i++){
+        for(int i = 0; i<20; i++){
             SP.add(arr[random.nextInt(1,5)],i);
         }
 
         System.out.println(SP);
         System.out.println(SP.size());
         System.out.println(SP.delete("Gosha"));
-        System.out.println(SP.size());
-        System.out.println(SP.isEmpty());
+        System.out.println(SP.buckets.size());
+//        System.out.println(SP.isEmpty());
+
     }
 }
